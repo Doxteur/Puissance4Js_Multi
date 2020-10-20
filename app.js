@@ -4,11 +4,15 @@ var io = require('socket.io')(http);
 
 app.get('/', (req, res) => {
     res.sendFile(__dirname + '/index.html');
+    
 });
 
 io.on('connection', (socket) => {
-    
-    io.emit('join',"Someone Join");
+
+    socket.on('placeAColor', (emplacement) => {
+        io.emit('placeAColor', emplacement);
+      });
+
 });
 
 http.listen((process.env.PORT || 5000), () => {
