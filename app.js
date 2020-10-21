@@ -1,3 +1,5 @@
+const { userInfo } = require('os');
+
 var app = require('express')();
 var http = require('http').createServer(app);
 var io = require('socket.io')(http);
@@ -6,33 +8,39 @@ app.get('/', (req, res) => {
     res.sendFile(__dirname + '/index.html');
 
 });
-
+let userList = [];
 io.on('connection', (socket) => {
-
-    socket.join('chambre');
+    
+    socket.join('room1');
     numberofPlayer += 1;
+    if (numberofPlayer != 0) {
+
+    }
     console.log(numberofPlayer)
 
-
+    socket.on('username', function(username){
+        userList.push(username);
+        io.emit('assignAColor',userList);
+    });
     socket.on('disconnect', (reason) => {
 
         numberofPlayer -= 1;
-        console.log(numberofPlayer)
 
     });
 
     socket.on('placeAColor', (emplacement) => {
-        console.log(numberofPlayer)
 
         if (numberofPlayer >= 2) {
             io.emit('placeAColor', emplacement);
         }
     });
-        io.emit('numberOfPlayer', numberofPlayer);
 
+    io.emit('numberOfPlayer', numberofPlayer);
 
+    
 
 });
+
 
 http.listen((process.env.PORT || 5000), () => {
     console.log('listening on localhost:5000');
