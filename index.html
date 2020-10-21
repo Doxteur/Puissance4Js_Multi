@@ -49,8 +49,7 @@
             color: Red;
             font-family: Arial, Helvetica, sans-serif;
             font-weight: Bold;
-            display: table-cell;
-            vertical-align: middle;
+            
         }
 
         input {
@@ -125,11 +124,13 @@
 
         
    
-        <div id="wonText">
-        </div>
+       
         <div id="cell">
+           
             <h3>Nombre de joueurs actuelle :</h3>
             <h3 id="nombreDeJoueur"></h3>
+            <div id="wonText">
+            </div>
             <button onclick="replay()" id="replayButton"> Replay </button>
             <div id="disapear">
                 <h1 id="playerTurn">Player 1 Turn</h1>
@@ -320,9 +321,7 @@
             console.log("You won !!");
             canPlay = false;
             document.getElementById("disapear").style.display = "none";
-            document.getElementById("replayButton").style.position = "absolute";
-            document.getElementById("replayButton").style.left = "20.5%";
-            document.getElementById("replayButton").style.marginTop = "40px";
+            
 
 
             let theDiv = document.getElementById("wonText");
