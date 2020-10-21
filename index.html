@@ -74,15 +74,47 @@
         table {
             position: relative;
             margin-top: 5%;
-           
+
         }
+
         td {
             width: 100px;
             min-width: 50px;
             height: 100px;
         }
 
-        
+
+        a {
+            color: white;
+            font-size: 25px;
+            text-decoration: none;
+            font-family: Arial, Helvetica, sans-serif;
+            font-weight: bold;
+        }
+
+        #download {
+            border: 5px solid transparent;
+
+            width: 70%;
+            margin: auto;
+            transition: ease-in-out 0.5s;
+        }
+
+        #download:hover {
+            border: 5px solid yellow;
+            transform: scale(1.05);
+        }
+        h3{
+            color: white;
+            font-size: 20px;
+
+            font-family: Arial, Helvetica, sans-serif;
+            font-weight: bold;
+        }
+        #nombreDeJoueur{
+            color: gold;
+            font-size: 35px;
+        }
     </style>
     <!-- Bouton pour communiquer avec tableau -->
 
@@ -91,9 +123,13 @@
 
     <div id="table">
 
+        
+   
         <div id="wonText">
         </div>
         <div id="cell">
+            <h3>Nombre de joueurs actuelle :</h3>
+            <h3 id="nombreDeJoueur"></h3>
             <button onclick="replay()" id="replayButton"> Replay </button>
             <div id="disapear">
                 <h1 id="playerTurn">Player 1 Turn</h1>
@@ -107,29 +143,8 @@
                     <h2>Download Project</h2>
                 </a>
             </div>
-            <style>
-                a {
-                    color: white;
-                    font-size: 25px;
-                    text-decoration: none;
-                    font-family: Arial, Helvetica, sans-serif;
-                    font-weight: bold;
-                }
 
-                #download {
-                    border: 5px solid transparent;
 
-                    width: 70%;
-                    margin: auto;
-                    transition: ease-in-out 0.5s;
-                }
-
-                #download:hover {
-                    border: 5px solid yellow;
-                    transform: scale(1.05);
-                }
-              
-            </style>
         </div>
     </div>
 
@@ -203,7 +218,6 @@
                         let newa = a;
                         newa = newa.toString();
                         let newnewvar = newi.concat(newa);
-                        console.log(newnewvar);
                         checkWin();
 
 
@@ -257,12 +271,16 @@
             $('form').submit(function (e) {
                 e.preventDefault(); // prevents page reloading
                 socket.emit('placeAColor', $('#m').val());
+                socket.emit('numberOfPlayer', 2);
                 $('#m').val('');
                 return false;
             });
 
             socket.on('placeAColor', function (emplacement) {
                 placeAColor(emplacement)
+            });
+            socket.on('numberOfPlayer', function (numberOfPlayer) {
+                document.getElementById('nombreDeJoueur').innerHTML = numberOfPlayer;
             });
         });
         function plateauRemplie() {
@@ -316,7 +334,7 @@
 
 
 
-    
+
 
 </body>
 
