@@ -128,7 +128,7 @@
 
 
         <div id="cell">
-
+            <h3 id="listJoueur"></h3>
             <h3>Nombre de joueurs actuelle :</h3>
             <h3 id="nombreDeJoueur"></h3>
             <div id="wonText">
@@ -156,7 +156,8 @@
     <!-- Création du tableau -->
 
     <script>
-        let username = prompt("Votre nom :")
+        let username = prompt("Votre nom :");
+
         let firstPlayer;
         let secondPlayer;
 
@@ -234,6 +235,8 @@
                             document.getElementById(newnewvar).style.backgroundColor = "Red";
                         } else {
                             document.getElementById("playerTurn").style.color = "Red";
+                            document.getElementById("playerTurn").innerHTML = "Player " + firstPlayer + " Turn"; //Change le text par rapport au tour du joueur
+
                             document.getElementById(newnewvar).style.backgroundColor = "Yellow";
 
                             whoPlaying = 1;
@@ -275,6 +278,8 @@
 
         $(function () {
             var socket = io();
+            socket.emit('username',username);
+            
             $('form').submit(function (e) {
                 e.preventDefault(); // prevents page reloading
                 socket.emit('placeAColor', $('#m').val());
@@ -285,19 +290,17 @@
             });
             
             socket.on('assignAColor', function(userList){
-
+                
                 firstPlayer = userList[0];
                 secondPlayer = userList[1];
                 console.log(firstPlayer);
                 console.log(secondPlayer);
                 document.getElementById("playerTurn").innerHTML = "Player " + firstPlayer + " Turn"; //Change le text par rapport au tour du joueur
-
-
+                
             });
             socket.on('placeAColor', function (emplacement) {
                 placeAColor(emplacement)
             });
-            socket.emit('username',username);
             
             
             socket.on('numberOfPlayer', function (numberOfPlayer) {
@@ -345,7 +348,11 @@
 
 
             let theDiv = document.getElementById("wonText");
-            theDiv.innerHTML += "Player " + whoPlaying + " Won";
+            if(whoPlaying == 1){
+                theDiv.innerHTML += "Player " + firstPlayer + " Won";
+            }else{
+                theDiv.innerHTML += "Player " + secondPlayer + " Won";
+        }
             theDiv.style.border = "solid yellow 15px";
 
         }

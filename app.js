@@ -13,18 +13,18 @@ io.on('connection', (socket) => {
     
     socket.join('room1');
     numberofPlayer += 1;
-    if (numberofPlayer != 0) {
-
-    }
-    console.log(numberofPlayer)
+   
 
     socket.on('username', function(username){
         userList.push(username);
         io.emit('assignAColor',userList);
     });
     socket.on('disconnect', (reason) => {
-
         numberofPlayer -= 1;
+        io.emit('numberOfPlayer', numberofPlayer);
+        userList.length = 0;
+       
+        io.emit('assignAColor',userList);
 
     });
 
