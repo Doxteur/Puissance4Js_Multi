@@ -1,14 +1,20 @@
 const { userInfo } = require('os');
 
+let express = require('express');
 var app = require('express')();
 var http = require('http').createServer(app);
 var io = require('socket.io')(http);
 let numberofPlayer = 0;
+
 app.get('/', (req, res) => {
-    res.sendFile(__dirname + '/index.html');
+    res.sendFile(__dirname + '/public/MainPage.html');
 
 });
+
+app.use(express.static('public'));
+
 let userList = [];
+
 io.on('connection', (socket) => {
     
     socket.join('room1');
