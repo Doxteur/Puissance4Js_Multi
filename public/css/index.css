@@ -1,43 +1,107 @@
-*{
+* {
     margin: 0;
     padding: 0;
-    text-decoration: none;
-    transition: ease-in-out 1s;
+}
+
+body {
+    background-color: wheat;
+}
+
+h1 {
+    color: red;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    font-size: 30px;
+    padding-bottom: 15px;
+}
+
+#table {
+    background-color: #2c5e8f;
+    width: 500px;
+    height: 500px;
+    display: table;
+    margin: 5%;
+    margin-top: 5%;
+    float: left;
 
 }
-a{
-    color: blue;
-}
-body{
 
-    background-image: url("../images/bande1.png");
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-position: center;
-    background-size: cover;
-}
-div{
-
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    -moz-transform: translateX(-50%) translateY(-50%);
-    -webkit-transform: translateX(-50%) translateY(-50%);
-    transform: translateX(-50%) translateY(-50%);
-    font-family: "Helvetica Rounded";
+#cell {
     text-align: center;
-   
+    display: table-cell;
+    vertical-align: middle;
 }
-div h1{
-    font-size: 150px;
-    color: #E76F51;
-}
-div h1:hover , h2:hover{
-   
-    transform: scale(1.2);
-}
-div h2{
-    font-size: 100px;
-    color: #E9C46A;
 
+#wonText {
+    font-size: 30px;
+    text-align: center;
+    color: Red;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: Bold;
+
+}
+
+input {
+    font-size: 30px;
+    text-align: center;
+}
+
+button {
+    font-size: 30px;
+    margin-top: 15px;
+    width: 100px;
+    height: 50px;
+    background-color: white;
+    margin-bottom: 50px;
+}
+
+button:active {
+    background-color: red;
+}
+
+table {
+    position: relative;
+    margin-top: 5%;
+
+}
+
+td {
+    width: 100px;
+    min-width: 50px;
+    height: 100px;
+}
+
+
+a {
+    color: white;
+    font-size: 25px;
+    text-decoration: none;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+}
+
+#download {
+    border: 5px solid transparent;
+
+    width: 70%;
+    margin: auto;
+    transition: ease-in-out 0.5s;
+}
+
+#download:hover {
+    border: 5px solid yellow;
+    transform: scale(1.05);
+}
+
+h3 {
+    color: white;
+    font-size: 20px;
+
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+}
+
+#nombreDeJoueur {
+    color: gold;
+    font-size: 35px;
 }

@@ -1,0 +1,43 @@
+*{
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+    transition: ease-in-out 1s;
+
+}
+a{
+    color: blue;
+}
+body{
+
+    background-image: url("../images/bande1.png");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+    background-size: cover;
+}
+div{
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -moz-transform: translateX(-50%) translateY(-50%);
+    -webkit-transform: translateX(-50%) translateY(-50%);
+    transform: translateX(-50%) translateY(-50%);
+    font-family: "Helvetica Rounded";
+    text-align: center;
+   
+}
+div h1{
+    font-size: 150px;
+    color: #E76F51;
+}
+div h1:hover , h2:hover{
+   
+    transform: scale(1.2);
+}
+div h2{
+    font-size: 100px;
+    color: #E9C46A;
+
+}
