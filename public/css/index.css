@@ -22,8 +22,6 @@ h1 {
     display: table;
     margin: 5%;
     margin-top: 5%;
-    float: left;
-
 }
 
 #cell {
@@ -61,8 +59,8 @@ button:active {
 
 table {
     position: relative;
-    margin-top: 5%;
-
+    float: right;
+    margin-right: 10%;
 }
 
 td {
