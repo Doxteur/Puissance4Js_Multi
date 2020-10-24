@@ -138,10 +138,17 @@
         socket.on('placeAColor', function (emplacement) {
             placeAColor(emplacement);
             document.getElementById('needMorePlayer').style.display = 'none';
+            document.getElementById('notYourTurn').style.visibility = 'hidden';
+
         });
 
         socket.on('needMorePlayer',function(){
             document.getElementById('needMorePlayer').innerHTML = "You need 2 Players";
+        });
+        socket.on('notYourTurn',function(){
+            document.getElementById('notYourTurn').style.visibility = 'visible';
+            document.getElementById('notYourTurn').innerHTML = "Not Your Turn";
+
         });
         
         socket.on('numberOfPlayer', function (numberOfPlayer) {

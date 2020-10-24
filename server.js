@@ -5,6 +5,7 @@ var app = require('express')();
 var http = require('http').createServer(app);
 var io = require('socket.io')(http);
 let numberofPlayer = 0;
+let playerturn = 0;
 
 app.get('/', (req, res) => {
     res.sendFile(__dirname + '/public/MainPage.html');
@@ -14,30 +15,41 @@ app.get('/', (req, res) => {
 app.use(express.static('public'));
 
 let userList = [];
-
+let userID = [];
 io.on('connection', (socket) => {
-    
+
     socket.join('room1');
     numberofPlayer += 1;
-   
 
-    socket.on('username', function(username){
+
+    socket.on('username', function (username) {
         userList.push(username);
-        io.emit('assignAColor',userList);
+        userID.push(socket.id);
+        io.emit('assignAColor', userList);
     });
 
     socket.on('disconnect', (reason) => {
         numberofPlayer -= 1;
         io.emit('numberOfPlayer', numberofPlayer);
         userList.length = 0;
-        io.emit('assignAColor',userList);
+        userID.length = 0;
+        io.emit('assignAColor', userList);
     });
 
     socket.on('placeAColor', (emplacement) => {
         if (numberofPlayer >= 2) {
-            io.emit('placeAColor', emplacement);
-        }else{
-            io.emit('needMorePlayer','Not enougth Player');
+            if (socket.id == userID[playerturn]) {
+                io.emit('placeAColor', emplacement);
+                playerturn += 1;
+                if (playerturn > 1) {
+                    playerturn = 0;
+                }
+            } else{
+                io.to(socket.id).emit('notYourTurn', 'Not your turn');
+           
+            }
+        } else {
+            io.emit('needMorePlayer', 'Not enougth Player');
         }
     });
 
