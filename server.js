@@ -25,25 +25,23 @@ io.on('connection', (socket) => {
         userList.push(username);
         io.emit('assignAColor',userList);
     });
+
     socket.on('disconnect', (reason) => {
         numberofPlayer -= 1;
         io.emit('numberOfPlayer', numberofPlayer);
         userList.length = 0;
-       
         io.emit('assignAColor',userList);
-
     });
 
     socket.on('placeAColor', (emplacement) => {
-
         if (numberofPlayer >= 2) {
             io.emit('placeAColor', emplacement);
+        }else{
+            io.emit('needMorePlayer','Not enougth Player');
         }
     });
 
     io.emit('numberOfPlayer', numberofPlayer);
-
-    
 
 });
 

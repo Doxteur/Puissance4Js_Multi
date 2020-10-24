@@ -123,28 +123,31 @@
             e.preventDefault(); // prevents page reloading
             socket.emit('placeAColor', $('#m').val());
             socket.emit('numberOfPlayer', 2);
-            
             $('#m').val('');
             return false;
         });
         
         socket.on('assignAColor', function(userList){
-            
             firstPlayer = userList[0];
             secondPlayer = userList[1];
             console.log(firstPlayer);
             console.log(secondPlayer);
             document.getElementById("playerTurn").innerHTML = "Player " + firstPlayer + " Turn"; //Change le text par rapport au tour du joueur
-            
         });
+
         socket.on('placeAColor', function (emplacement) {
-            placeAColor(emplacement)
+            placeAColor(emplacement);
+            document.getElementById('needMorePlayer').style.display = 'none';
         });
-        
+
+        socket.on('needMorePlayer',function(){
+            document.getElementById('needMorePlayer').innerHTML = "You need 2 Players";
+        });
         
         socket.on('numberOfPlayer', function (numberOfPlayer) {
             document.getElementById('nombreDeJoueur').innerHTML = numberOfPlayer;
         });
+        
     });
     function plateauRemplie() {
         for (let i = 0; i <= 5; i++) {
