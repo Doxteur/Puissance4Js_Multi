@@ -20,8 +20,6 @@ io.on('connection', (socket) => {
 
     socket.join('room1');
     numberofPlayer += 1;
-
-
     socket.on('username', function (username) {
         userList.push(username);
         userID.push(socket.id);
@@ -46,7 +44,6 @@ io.on('connection', (socket) => {
                 }
             } else{
                 io.to(socket.id).emit('notYourTurn', 'Not your turn');
-           
             }
         } else {
             io.emit('needMorePlayer', 'Not enougth Player');
