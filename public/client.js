@@ -50,7 +50,7 @@
 
         plateauRemplie();
         if (canPlay == true) {
-            if (a > 8 || a <= 0) {
+            if (a > 8 || a <= 0 && !isNaN(a)) {
                 console.log("Mauvais Numéro");
                 return 0;
             }
@@ -121,17 +121,17 @@
         
         $('form').submit(function (e) {
             e.preventDefault(); // prevents page reloading
+            if(!isNaN($('#m').val()) && $('#m').val() < 8 && $('#m').val() >= 0){
             socket.emit('placeAColor', $('#m').val());
             socket.emit('numberOfPlayer', 2);
             $('#m').val('');
             return false;
+            }
         });
         
         socket.on('assignAColor', function(userList){
             firstPlayer = userList[0];
             secondPlayer = userList[1];
-            console.log(firstPlayer);
-            console.log(secondPlayer);
             document.getElementById("playerTurn").innerHTML = "Player " + firstPlayer + " Turn"; //Change le text par rapport au tour du joueur
         });
 
