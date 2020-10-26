@@ -2,19 +2,12 @@
     margin: 0;
     padding: 0;
     text-decoration: none;
-    transition: ease-in-out 1s;
 
 }
-a{
-    color: blue;
-}
+
 body{
 
-    background-image: url("../images/bande1.png");
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-position: center;
-    background-size: cover;
+  background-color: wheat;
 }
 div{
 
@@ -26,18 +19,27 @@ div{
     transform: translateX(-50%) translateY(-50%);
     font-family: "Helvetica Rounded";
     text-align: center;
+
    
 }
+
 div h1{
+
     font-size: 150px;
     color: #E76F51;
+   
+    border-radius: 25px;
 }
 div h1:hover , h2:hover{
-   
+    transition: ease-in-out 0.5s;
+    
     transform: scale(1.2);
+    color: royalblue;
 }
 div h2{
+    color: lightseagreen;
+
+
     font-size: 100px;
-    color: #E9C46A;
 
 }
