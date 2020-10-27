@@ -10,12 +10,18 @@
 </head>
 
 <body>
+ 
     <script src="/socket.io/socket.io.js"></script>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="client.js"></script>
     <link rel="stylesheet" href="css/index.css">
 
     <!-- Bouton pour communiquer avec tableau -->
+   
+
+
+
+
 
     <h4 id="needMorePlayer"></h4>
     <h4 id="notYourTurn"></h4>
@@ -30,7 +36,7 @@
             <button onclick="replay()" id="replayButton"> Replay </button>
             <div id="disapear">
                 <h1 id="playerTurn">Player <span id="Player">qsd</span> Turn</h1>
-                <form action="">
+                <form action="" id="placeColor">
                     <input id="m" autocomplete="off" /><button>Send</button>
                 </form>
 
@@ -45,6 +51,15 @@
         </div>
     </div>
 
+    <div id="chat">
+        <ul id="messageList">
+            
+        </ul>
+        <form action="" id="messageForm">
+            <input id="message" autocomplete="off" /><button>Send</button>
+        </form>
+
+    </div>
 
 </body>
 

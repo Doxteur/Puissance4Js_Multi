@@ -20,10 +20,18 @@ io.on('connection', (socket) => {
 
     socket.join('room1');
     numberofPlayer += 1;
-    socket.on('username', function (username) {
+    socket.on('username', (username) => {
+     
         userList.push(username);
         userID.push(socket.id);
         io.emit('assignAColor', userList);
+
+    });
+    socket.on('getUsername' , (username) => {
+        io.emit('getUsername', username);
+    });
+    socket.on('chat message', (msg) => {
+        io.emit('chat message',msg);
     });
 
     socket.on('disconnect', (reason) => {
@@ -51,6 +59,7 @@ io.on('connection', (socket) => {
     });
 
     io.emit('numberOfPlayer', numberofPlayer);
+
 
 });
 
