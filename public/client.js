@@ -121,7 +121,7 @@ $(function () {
 
     $('#placeColor').submit(function (e) {
         e.preventDefault(); // prevents page reloading
-        if (!isNaN($('#m').val()) && $('#m').val() < 8 && $('#m').val() >= 0) {
+        if (!isNaN($('#m').val()) && $('#m').val() < 8 && $('#m').val() > 0 ) {
             socket.emit('placeAColor', $('#m').val());
             socket.emit('numberOfPlayer', 2);
             $('#m').val('');
