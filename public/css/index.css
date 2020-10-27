@@ -12,7 +12,7 @@ body {
 #chat{
     overflow: scroll;
 }
-form{
+#messageForm{
     position: absolute;
     bottom: 0;
 
