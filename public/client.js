@@ -1,10 +1,11 @@
+// Déclariation de variable
 let username = prompt("Votre nom :");
-
 let firstPlayer;
 let secondPlayer;
-
 let canPlay = true;
-
+var socket = io();
+let PlayerTurn = 1;
+let won = false;
 var plateau = [
     [0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0],
@@ -14,28 +15,43 @@ var plateau = [
     [0, 0, 0, 0, 0, 0, 0],
 ];
 
-console.log(plateau.join("\n") + "\n\n"); //Permet de mettre le tableau en colonne dans la console.
 
+// Permet la création du tableau html 
 var body = document.getElementsByTagName("body")[0];
 var tbl = document.createElement("table");
 var tblBody = document.createElement("tbody");
 
 for (var i = 0; i < 6; i++) {
-
+    // Crée des lignes avec une certaine id
     var row = document.createElement("tr");
     row.setAttribute("id", i + 1);
 
     for (var j = 0; j < 7; j++) {
-        
-        var cell = document.createElement("td");
-        //Permet de donner un id a chaque td comme ca il sont accessible. 
+        // Crée des cases avec une certaines id
+        let cell = document.createElement("td");
+        // Création d'un bouton qui permetra un placement de couleur à l'emplacement
+        let btn = document.createElement("BUTTON");
+
+        //Permet de donner un id a chaque td. 
         let tempi = i.toString();
         let tempJ = j.toString();
         let newvar = tempi.concat(tempJ)
         cell.setAttribute("id", newvar);
 
-        var cellText = document.createTextNode(" ");
+        let cellText = document.createTextNode(" ");
+        let emplacementBouton = newvar % 10 + 1;
+
+        // Quand le bouton est cliquer il envoie au serveur l'emplacement de la case qui doit changer
+        btn.onclick = function () {
+            if (won == false) {
+                socket.emit('updatePlateau', emplacementBouton)
+            }
+        };
+
         cell.appendChild(cellText);
+        // Permet l'ajout du bouton dans chaque case 
+        cell.appendChild(btn);
+
         row.appendChild(cell);
     }
 
@@ -46,69 +62,89 @@ tbl.appendChild(tblBody);
 body.appendChild(tbl);
 tbl.setAttribute("border", "2");
 
- 
 
+$("td button").hover(function () {
+    $(this).css("background-color", "rgba(255, 0, 0, .1)");
+}, function () {
+    $(this).css("background-color", "inherit");
+});
 
 
 // Gestion de la requete du form
 
 $(function () {
-    
-    socket.on('reset',function(){
-        var tdElement = document.getElementsByTagName('td');
 
+    // Si le serveur envoie au client un emit reset alors le client doit reset son tableau
+    socket.on('reset', function () {
+        won = false;
+        var tdElement = document.getElementsByTagName('td');
         for (var i = 0; i < tdElement.length; i++) {
             tdElement[i].style.background = 'none';
-        }        console.log("Communique")
-
+        } 
     });
-    socket.on('whereToChangeColor',function(newnewvar , whoPlaying,userList){
-        document.getElementById('notYourTurn').style.visibility = 'hidden';
-        document.getElementById('needMorePlayer').style.visibility = 'hidden';
 
-        firstPlayer = userList[0];
-        secondPlayer = userList[1];
-        if(whoPlaying == 1){
-            
-        document.getElementById(newnewvar).style.backgroundColor = "Red";
-        document.getElementById("playerTurn").innerHTML = "Player " + secondPlayer + " Turn"; //Change le text par rapport au tour du joueur
-        document.getElementById("playerTurn").style.color = "Yellow";
-
-        
-    }else if(whoPlaying == 2){
-        document.getElementById("playerTurn").innerHTML = "Player " + firstPlayer + " Turn"; //Change le text par rapport au tour du joueur
-        document.getElementById("playerTurn").style.color = "Red";
-
-        document.getElementById(newnewvar).style.backgroundColor = "Blue";
-
-    }
-    });
-    socket.on('playerWon',function(whoPlaying){        
-
-    document.getElementById("disapear").style.display = "none";
-    let theDiv = document.getElementById("wonText");
-    if (whoPlaying == 1) {
-        theDiv.innerHTML += "Player " + firstPlayer + " Won";
-    } else {
-        theDiv.innerHTML += "Player " + secondPlayer + " Won";
-    }
-    theDiv.style.border = "solid yellow 15px";
+    socket.on("replayChangeColor", function(whoPlaying){
+        $("td button").hover(function () {
+            $(this).css("background-color", "rgba(255, 0, 0, .1)");
+        }, function () {
+            $(this).css("background-color", "inherit");
+        });
+        document.getElementById("playerTurn").innerHTML = "Player " + userList[0] + " Turn"; //Change le text par rapport au tour du joueur
+        document.getElementById("playerTurn").style.color = "#FD5A5A";
     });
 
 
-    socket.emit('username', username);
 
-    $('#placeColor').submit(function (e) {
-        e.preventDefault(); // prevents page reloading
-        if (!isNaN($('#m').val()) && $('#m').val() < 8 && $('#m').val() > 0 ) {
-            socket.emit('placeAColor', $('#m').val());
-            socket.emit('updatePlateau',$('#m').val())
 
-            $('#m').val('');
-            return false;
+    // Change la couleur du text par rapport au tour du joueur.
+    socket.on('whereToChangeColor', function (newnewvar, whoPlaying, userList) {
+        console.log(whoPlaying);
+        if (won == false) {
+            document.getElementById('notYourTurn').style.visibility = 'hidden';
+            if (whoPlaying == 1) {
+                document.getElementById(newnewvar).style.backgroundColor = "Red";
+                document.getElementById("playerTurn").innerHTML = "Player " + userList[1] + " Turn"; //Change le text par rapport au tour du joueur
+                document.getElementById("playerTurn").style.color = "Yellow";
+                $("td button").hover(function () {
+                    $(this).css("background-color", "rgba(255, 255,0, .1)");
+                }, function () {
+                    $(this).css("background-color", "inherit");
+                });
+            } else if (whoPlaying == 2) {
+                $("td button").hover(function () {
+                    $(this).css("background-color", "rgba(255, 0, 0, .1)");
+                }, function () {
+                    $(this).css("background-color", "inherit");
+                });
+                document.getElementById("playerTurn").innerHTML = "Player " + userList[0] + " Turn"; //Change le text par rapport au tour du joueur
+                document.getElementById("playerTurn").style.color = "#FD5A5A";
+                document.getElementById(newnewvar).style.backgroundColor = "Yellow";
+            }
         }
     });
+    // Permet de changer la page html avec le nom du joueur qui gagne
+    socket.on('playerWon', function (whoPlaying, userList) {
 
+        won = true;
+        let theDiv = document.getElementById("playerTurn");
+
+        if (whoPlaying == 1) {
+            theDiv.innerHTML = userList[0] + " Won";
+            theDiv.style.color = "#FD5A5A"
+
+        } else {
+            theDiv.innerHTML = userList[1] + " Won";
+            theDiv.style.color = "yellow"
+
+        }
+
+    });
+
+    // Permet l'envoie du username choisie au serveur
+    socket.emit('username', username);
+
+
+    // Permet d'envoyer le message se trouvant dans le form au serveur
     $('#messageForm').submit(function (e) {
         e.preventDefault(); // prevents page reloading
         socket.emit('getUsername', username);
@@ -117,8 +153,9 @@ $(function () {
         return false;
     });
 
+    // Permet d'ajouté un Username et un message dans le chat
     socket.on('getUsername', function (chatUsername) {
-            $('#messageList').append($('<h5>').text(chatUsername + ' : '));
+        $('#messageList').append($('<h5>').text(chatUsername + ' : '));
     });
 
     socket.on('chat message', function (msg) {
@@ -126,37 +163,31 @@ $(function () {
         let objDiv = document.getElementById("chat");
         objDiv.scrollTop = objDiv.scrollHeight;
     });
-
+    // Change la couleur du nom du joueur par rapport à son tour
     socket.on('assignAColor', function (userList) {
-        firstPlayer = userList[0];
-        secondPlayer = userList[1];
-        document.getElementById("playerTurn").innerHTML = "Player " + firstPlayer + " Turn"; //Change le text par rapport au tour du joueur
+        document.getElementById("playerTurn").innerHTML = "Player " + userList[0] + " Turn"; //Change le text par rapport au tour du joueur
     });
 
-   
-    socket.on('afficherDéconnexion',function(){
+    // Design html par rapport a la deconnexion , si il y a asser de joueur , et si c'est votre tour
+    socket.on('afficherDéconnexion', function () {
         document.getElementById('notYourTurn').style.visibility = 'visible';
         document.getElementById('notYourTurn').innerHTML = "L'adversaire à quitté";
     });
     socket.on('needMorePlayer', function () {
-        document.getElementById('needMorePlayer').innerHTML = "You need 2 Players";
+        document.getElementById('notYourTurn').innerHTML = "You need 2 Players";
     });
     socket.on('notYourTurn', function () {
         document.getElementById('notYourTurn').style.visibility = 'visible';
         document.getElementById('notYourTurn').innerHTML = "Not Your Turn";
     });
-
+    // Permet d'afficher le nombre de player 
     socket.on('numberOfPlayer', function (numberOfPlayer) {
         document.getElementById('nombreDeJoueur').innerHTML = numberOfPlayer;
     });
-
-
-
 });
 
-var socket = io();
-    
-function replay(){
+function replay() {
+    won = false;
     socket.emit('replay');
-    console.log('Replay')
-}
+};
+
