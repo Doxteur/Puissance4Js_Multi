@@ -79,7 +79,7 @@ $(function () {
         document.getElementById("playerTurn").innerHTML = "Player " + firstPlayer + " Turn"; //Change le text par rapport au tour du joueur
         document.getElementById("playerTurn").style.color = "Red";
 
-        document.getElementById(newnewvar).style.backgroundColor = "Yellow";
+        document.getElementById(newnewvar).style.backgroundColor = "Blue";
 
     }
     });
