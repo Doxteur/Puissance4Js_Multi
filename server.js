@@ -29,8 +29,6 @@ var plateau = [
 ];
 
 io.on('connection', (socket) => {
-    userID.push(socket.id);
-   
     numberofPlayer += 1;
     io.emit('numberOfPlayer', numberofPlayer);
 
@@ -144,11 +142,15 @@ io.on('connection', (socket) => {
         }
     });
 
+
+    socket.join('room1');
+
     socket.on('username', (username) => {
-        if(socket.id == userID[0] || socket.id == userID[1]){
+
         userList.push(username);
-    }
-    io.emit('assignAColor', userList, whoPlaying);
+        userID.push(socket.id);
+        io.emit('assignAColor', userList, whoPlaying);
+
     });
     socket.on('getUsername', (username) => {
         io.emit('getUsername', username);
