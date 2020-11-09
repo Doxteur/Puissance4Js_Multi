@@ -160,22 +160,25 @@ io.on('connection', (socket) => {
     });
 
     socket.on('disconnect', (reason) => {
-      
+        io.emit("afficherDéconnexion")
         numberofPlayer -= 1;
         io.emit('numberOfPlayer', numberofPlayer);
-        let whoDisconnected = userID.indexOf(socket.id);
+        let whoDisconnected = userID.indexOf(socket.id)
         userID.splice(whoDisconnected, 1);
         userList.splice(whoDisconnected, 1);
         io.emit('assignAColor', userList);
+        console.log(userList);
+        console.log(userID);
         if (userID == 0) {
             io.emit('replay');
 
         }
-        if(whoDisconnected <= 1)
-        io.emit("afficherDéconnexion");
 
 
     });
+
+
+
 
 });
 
