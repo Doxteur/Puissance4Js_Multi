@@ -32,6 +32,12 @@ app.use(express.static('public'));
 // La fonction se joue si quelqu'un se connecte. 
 io.on('connection', (socket) => {
 
+    socket.emit("refreshTable", plateau)
+
+
+
+
+
     // Permet de dresser une list des joueurs via leur ID
     userID.push(socket.id);
     numberofPlayer += 1;

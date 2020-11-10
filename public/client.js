@@ -73,6 +73,27 @@ $("td button").hover(function() {
 // Gestion de la requete du form
 
 $(function() {
+    // Permet de refresh update le tableau si un spectateur join. Sinon il n'a pas les modifications de couleurs en cours
+    socket.on("refreshTable", function(refreshplateau) {
+        for (let i = 0; i < 6; i++) {
+            for (let j = 0; j < 7; j++) {
+                let newi = i;
+                newi = i.toString();
+                let newj = j;
+                newj = newj.toString();
+                let newnewvar = newi.concat(newj);
+
+                if (refreshplateau[i][j] == 1) {
+                    document.getElementById(newnewvar).style.backgroundColor = "Red";
+                }
+                if (refreshplateau[i][j] == 2) {
+                    document.getElementById(newnewvar).style.backgroundColor = "Yellow";
+                }
+            }
+        }
+    });
+
+
 
     socket.on("plateauRemplie", function() {
         document.getElementById("playerTurn").innerHTML = "Plateau Plein Replay"
