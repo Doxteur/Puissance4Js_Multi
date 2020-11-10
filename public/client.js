@@ -42,7 +42,7 @@ for (var i = 0; i < 6; i++) {
         let emplacementBouton = newvar % 10 + 1;
 
         // Quand le bouton est cliquer il envoie au serveur l'emplacement de la case qui doit changer
-        btn.onclick = function () {
+        btn.onclick = function() {
             if (won == false) {
                 socket.emit('updatePlateau', emplacementBouton)
             }
@@ -63,30 +63,33 @@ body.appendChild(tbl);
 tbl.setAttribute("border", "2");
 
 
-$("td button").hover(function () {
+$("td button").hover(function() {
     $(this).css("background-color", "rgba(255, 0, 0, .1)");
-}, function () {
+}, function() {
     $(this).css("background-color", "inherit");
 });
 
 
 // Gestion de la requete du form
 
-$(function () {
+$(function() {
 
+    socket.on("plateauRemplie", function() {
+        document.getElementById("playerTurn").innerHTML = "Plateau Plein Replay"
+    });
     // Si le serveur envoie au client un emit reset alors le client doit reset son tableau
-    socket.on('reset', function () {
+    socket.on('reset', function() {
         won = false;
         var tdElement = document.getElementsByTagName('td');
         for (var i = 0; i < tdElement.length; i++) {
             tdElement[i].style.background = 'none';
-        } 
+        }
     });
 
-    socket.on("replayChangeColor", function(whoPlaying){
-        $("td button").hover(function () {
+    socket.on("replayChangeColor", function(whoPlaying) {
+        $("td button").hover(function() {
             $(this).css("background-color", "rgba(255, 0, 0, .1)");
-        }, function () {
+        }, function() {
             $(this).css("background-color", "inherit");
         });
         document.getElementById("playerTurn").innerHTML = "Player " + userList[0] + " Turn"; //Change le text par rapport au tour du joueur
@@ -97,7 +100,7 @@ $(function () {
 
 
     // Change la couleur du text par rapport au tour du joueur.
-    socket.on('whereToChangeColor', function (newnewvar, whoPlaying, userList) {
+    socket.on('whereToChangeColor', function(newnewvar, whoPlaying, userList) {
         console.log(whoPlaying);
         if (won == false) {
             document.getElementById('notYourTurn').style.visibility = 'hidden';
@@ -105,15 +108,15 @@ $(function () {
                 document.getElementById(newnewvar).style.backgroundColor = "Red";
                 document.getElementById("playerTurn").innerHTML = "Player " + userList[1] + " Turn"; //Change le text par rapport au tour du joueur
                 document.getElementById("playerTurn").style.color = "Yellow";
-                $("td button").hover(function () {
+                $("td button").hover(function() {
                     $(this).css("background-color", "rgba(255, 255,0, .1)");
-                }, function () {
+                }, function() {
                     $(this).css("background-color", "inherit");
                 });
             } else if (whoPlaying == 2) {
-                $("td button").hover(function () {
+                $("td button").hover(function() {
                     $(this).css("background-color", "rgba(255, 0, 0, .1)");
-                }, function () {
+                }, function() {
                     $(this).css("background-color", "inherit");
                 });
                 document.getElementById("playerTurn").innerHTML = "Player " + userList[0] + " Turn"; //Change le text par rapport au tour du joueur
@@ -123,7 +126,7 @@ $(function () {
         }
     });
     // Permet de changer la page html avec le nom du joueur qui gagne
-    socket.on('playerWon', function (whoPlaying, userList) {
+    socket.on('playerWon', function(whoPlaying, userList) {
 
         won = true;
         let theDiv = document.getElementById("playerTurn");
@@ -145,7 +148,7 @@ $(function () {
 
 
     // Permet d'envoyer le message se trouvant dans le form au serveur
-    $('#messageForm').submit(function (e) {
+    $('#messageForm').submit(function(e) {
         e.preventDefault(); // prevents page reloading
         socket.emit('getUsername', username);
         socket.emit('chat message', $('#message').val());
@@ -154,34 +157,34 @@ $(function () {
     });
 
     // Permet d'ajouté un Username et un message dans le chat
-    socket.on('getUsername', function (chatUsername) {
+    socket.on('getUsername', function(chatUsername) {
         $('#messageList').append($('<h5>').text(chatUsername + ' : '));
     });
 
-    socket.on('chat message', function (msg) {
+    socket.on('chat message', function(msg) {
         $('#messageList').append($('<li>').text(msg));
         let objDiv = document.getElementById("chat");
         objDiv.scrollTop = objDiv.scrollHeight;
     });
     // Change la couleur du nom du joueur par rapport à son tour
-    socket.on('assignAColor', function (userList) {
+    socket.on('assignAColor', function(userList) {
         document.getElementById("playerTurn").innerHTML = "Player " + userList[0] + " Turn"; //Change le text par rapport au tour du joueur
     });
 
     // Design html par rapport a la deconnexion , si il y a asser de joueur , et si c'est votre tour
-    socket.on('afficherDéconnexion', function () {
+    socket.on('afficherDéconnexion', function() {
         document.getElementById('notYourTurn').style.visibility = 'visible';
         document.getElementById('notYourTurn').innerHTML = "L'adversaire à quitté";
     });
-    socket.on('needMorePlayer', function () {
+    socket.on('needMorePlayer', function() {
         document.getElementById('notYourTurn').innerHTML = "You need 2 Players";
     });
-    socket.on('notYourTurn', function () {
+    socket.on('notYourTurn', function() {
         document.getElementById('notYourTurn').style.visibility = 'visible';
         document.getElementById('notYourTurn').innerHTML = "Not Your Turn";
     });
     // Permet d'afficher le nombre de player 
-    socket.on('numberOfPlayer', function (numberOfPlayer) {
+    socket.on('numberOfPlayer', function(numberOfPlayer) {
         document.getElementById('nombreDeJoueur').innerHTML = numberOfPlayer;
     });
 });
@@ -190,4 +193,3 @@ function replay() {
     won = false;
     socket.emit('replay');
 };
-

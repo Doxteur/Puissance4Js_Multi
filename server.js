@@ -40,8 +40,8 @@ io.on('connection', (socket) => {
     io.emit('numberOfPlayer', numberofPlayer);
 
     // Permet de relancer la partie
-    socket.on('replay', function () {
-        if(socket.id == userID[playerturn] || won == true){
+    socket.on('replay', function() {
+        if (socket.id == userID[playerturn] || won == true) {
             plateau = [
                 [0, 0, 0, 0, 0, 0, 0],
                 [0, 0, 0, 0, 0, 0, 0],
@@ -54,20 +54,20 @@ io.on('connection', (socket) => {
             // Demande a tout les clients de reset
             playerturn = 0;
             whoPlaying = 1;
-            io.emit("replayChangeColor",1)
+            io.emit("replayChangeColor", 1)
             io.emit('reset');
         }
     });
 
     // Gérer le tableau
-    socket.on('updatePlateau', function (emplacement) {
+    socket.on('updatePlateau', function(emplacement) {
 
         if (numberofPlayer >= 2) {
 
             // Si c'est bien le tour du joueur qui envoie une demande
             if (socket.id == userID[playerturn]) {
                 playerturn += 1;
-                
+
                 plateauRemplie();
 
                 // Vérification d'un numéro valide
@@ -106,6 +106,7 @@ io.on('connection', (socket) => {
 
                     }
                 }
+
                 function checkWin() {
 
                     for (let i = 0; i <= 5; i++) {
@@ -115,7 +116,7 @@ io.on('connection', (socket) => {
                             if (plateau[i][j] == whoPlaying && plateau[i][j + 1] == whoPlaying && plateau[i][j + 2] == whoPlaying && plateau[i][j + 3] == whoPlaying) {
                                 // Check Horizontale
                                 console.log(whoPlaying + " Won")
-                                // Fonction Won
+                                    // Fonction Won
                                 io.emit('playerWon', whoPlaying, userList);
                                 won = true;
                                 return 1;
@@ -124,7 +125,7 @@ io.on('connection', (socket) => {
                                 if (plateau[i][j] == whoPlaying && plateau[i - 1][j] == whoPlaying && plateau[i - 2][j] == whoPlaying && plateau[i - 3][j] == whoPlaying) {
                                     //Check Vertical
                                     console.log(whoPlaying + " Won")
-                                                                    won = true;
+                                    won = true;
 
                                     // Fonction Won
                                     io.emit('playerWon', whoPlaying, userList);
@@ -135,7 +136,7 @@ io.on('connection', (socket) => {
                                 if (plateau[i][j] == whoPlaying && plateau[i - 1][j - 1] == whoPlaying && plateau[i - 2][j - 2] == whoPlaying && plateau[i - 3][j - 3] == whoPlaying || plateau[i][j] == whoPlaying && plateau[i - 1][j + 1] == whoPlaying && plateau[i - 2][j + 2] == whoPlaying && plateau[i - 3][j + 3] == whoPlaying) {
                                     //Check Diagonal
                                     console.log(whoPlaying + " Won")
-                                    // Fonction Won
+                                        // Fonction Won
                                     io.emit('playerWon', whoPlaying, userList);
                                     won = true;
 
@@ -154,9 +155,15 @@ io.on('connection', (socket) => {
                             if (plateau[i][j] == 0) {
                                 return 0;
                             }
+
                         }
                     }
+                    io.emit("plateauRemplie");
                 }
+
+
+
+
 
                 if (playerturn > 1) {
                     playerturn = 0;

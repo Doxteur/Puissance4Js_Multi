@@ -10,23 +10,23 @@
 </head>
 
 <body>
- 
+
     <script src="/socket.io/socket.io.js"></script>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <link rel="stylesheet" href="css/index.css">
 
     <!-- Bouton pour communiquer avec tableau -->
-   
+
 
 
     <h1 id="playerTurn">Joueur <span id="Player">qsd</span>Tour</h1>
     <button onclick="replay()" id="replayButton"> Replay </button>
-   
-    <h4 id="notYourTurn"></h4>
-    
 
-       
-            <!-- <div id="disapear">
+    <h4 id="notYourTurn"></h4>
+
+
+
+    <!-- <div id="disapear">
                 <form action="" id="placeColor">
                     <input id="m" autocomplete="off" /><button>Placer</button>
                 </form>
@@ -39,28 +39,28 @@
             </div> -->
 
 
-        
+
     </div>
 
     <script src="client.js"></script>
     <div id="chatGlobal">
         <h6>Chat : </h6>
 
-    <div id="chat">
-        <ul id="messageList">
-            
-        </ul>
-    </div> 
-    <form action="" id="messageForm">
-        <input id="message" autocomplete="off" /><button>Send</button>
-    </form>
-</div>
+        <div id="chat">
+            <ul id="messageList">
 
-<div id="Joueur">
-    <h3 id="listJoueur"></h3>
-    <h3>Player in the room :</h3>
-    <h3 id="nombreDeJoueur"></h3>
-</div>
+            </ul>
+        </div>
+        <form action="" id="messageForm">
+            <input id="message" autocomplete="off" /><button>Send</button>
+        </form>
+    </div>
+
+    <div id="Joueur">
+        <h3 id="listJoueur"></h3>
+        <h3>Player in the room :</h3>
+        <h3 id="nombreDeJoueur"></h3>
+    </div>
 
 </body>
 
