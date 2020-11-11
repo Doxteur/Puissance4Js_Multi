@@ -60,13 +60,13 @@ io.on('connection', (socket) => {
             // Demande a tout les clients de reset
             playerturn = 0;
             whoPlaying = 1;
-            io.emit("replayChangeColor", 1)
+            io.emit("replayResetColor", 1)
             io.emit('reset');
         }
     });
 
     // Gérer le tableau
-    socket.on('updatePlateau', function(emplacement) {
+    socket.on('placerUneCouleur', function(emplacement) {
 
         if (numberofPlayer >= 2) {
 
@@ -97,7 +97,7 @@ io.on('connection', (socket) => {
                         let newnewvar = newi.concat(newa);
 
                         // Envoie au client ou changer la couleur 
-                        io.emit("whereToChangeColor", newnewvar, whoPlaying, userList);
+                        io.emit("whoisPlaying", newnewvar, whoPlaying, userList);
 
                         // Verification de victoire
                         checkWin();
@@ -123,7 +123,7 @@ io.on('connection', (socket) => {
                                 // Check Horizontale
                                 console.log(whoPlaying + " Won")
                                     // Fonction Won
-                                io.emit('playerWon', whoPlaying, userList);
+                                io.emit('isWon', whoPlaying, userList);
                                 won = true;
                                 return 1;
                             }
@@ -134,7 +134,7 @@ io.on('connection', (socket) => {
                                     won = true;
 
                                     // Fonction Won
-                                    io.emit('playerWon', whoPlaying, userList);
+                                    io.emit('isWon', whoPlaying, userList);
                                     won = true;
 
                                     return 1;
@@ -143,7 +143,7 @@ io.on('connection', (socket) => {
                                     //Check Diagonal
                                     console.log(whoPlaying + " Won")
                                         // Fonction Won
-                                    io.emit('playerWon', whoPlaying, userList);
+                                    io.emit('isWon', whoPlaying, userList);
                                     won = true;
 
                                     return 1;

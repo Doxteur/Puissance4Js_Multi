@@ -1,11 +1,13 @@
 // Déclariation de variable
 let username = prompt("Votre nom :");
+
 let firstPlayer;
 let secondPlayer;
-let canPlay = true;
+
 var socket = io();
 let PlayerTurn = 1;
 let won = false;
+
 var plateau = [
     [0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0],
@@ -44,7 +46,7 @@ for (var i = 0; i < 6; i++) {
         // Quand le bouton est cliquer il envoie au serveur l'emplacement de la case qui doit changer
         btn.onclick = function() {
             if (won == false) {
-                socket.emit('updatePlateau', emplacementBouton)
+                socket.emit('placerUneCouleur', emplacementBouton)
             }
         };
 
@@ -63,6 +65,8 @@ body.appendChild(tbl);
 tbl.setAttribute("border", "2");
 
 
+// Permet le changement de couleur sur les case 
+
 $("td button").hover(function() {
     $(this).css("background-color", "rgba(255, 0, 0, .1)");
 }, function() {
@@ -70,7 +74,6 @@ $("td button").hover(function() {
 });
 
 
-// Gestion de la requete du form
 
 $(function() {
     // Permet de refresh update le tableau si un spectateur join. Sinon il n'a pas les modifications de couleurs en cours
@@ -98,6 +101,7 @@ $(function() {
     socket.on("plateauRemplie", function() {
         document.getElementById("playerTurn").innerHTML = "Plateau Plein Replay"
     });
+
     // Si le serveur envoie au client un emit reset alors le client doit reset son tableau
     socket.on('reset', function() {
         won = false;
@@ -107,13 +111,12 @@ $(function() {
         }
     });
 
-    socket.on("replayChangeColor", function(whoPlaying) {
+    socket.on("replayResetColor", function(whoPlaying) {
         $("td button").hover(function() {
             $(this).css("background-color", "rgba(255, 0, 0, .1)");
         }, function() {
             $(this).css("background-color", "inherit");
         });
-        document.getElementById("playerTurn").innerHTML = "Player " + userList[0] + " Turn"; //Change le text par rapport au tour du joueur
         document.getElementById("playerTurn").style.color = "#FD5A5A";
     });
 
@@ -121,25 +124,27 @@ $(function() {
 
 
     // Change la couleur du text par rapport au tour du joueur.
-    socket.on('whereToChangeColor', function(newnewvar, whoPlaying, userList) {
-        console.log(whoPlaying);
+    socket.on('whoisPlaying', function(newnewvar, whoPlaying, userList) {
         if (won == false) {
-            document.getElementById('notYourTurn').style.visibility = 'hidden';
+            document.getElementById('errorMessages').style.visibility = 'hidden';
             if (whoPlaying == 1) {
                 document.getElementById(newnewvar).style.backgroundColor = "Red";
                 document.getElementById("playerTurn").innerHTML = "Player " + userList[1] + " Turn"; //Change le text par rapport au tour du joueur
                 document.getElementById("playerTurn").style.color = "Yellow";
+
                 $("td button").hover(function() {
                     $(this).css("background-color", "rgba(255, 255,0, .1)");
                 }, function() {
                     $(this).css("background-color", "inherit");
                 });
+
             } else if (whoPlaying == 2) {
                 $("td button").hover(function() {
                     $(this).css("background-color", "rgba(255, 0, 0, .1)");
                 }, function() {
                     $(this).css("background-color", "inherit");
                 });
+
                 document.getElementById("playerTurn").innerHTML = "Player " + userList[0] + " Turn"; //Change le text par rapport au tour du joueur
                 document.getElementById("playerTurn").style.color = "#FD5A5A";
                 document.getElementById(newnewvar).style.backgroundColor = "Yellow";
@@ -147,8 +152,7 @@ $(function() {
         }
     });
     // Permet de changer la page html avec le nom du joueur qui gagne
-    socket.on('playerWon', function(whoPlaying, userList) {
-
+    socket.on('isWon', function(whoPlaying, userList) {
         won = true;
         let theDiv = document.getElementById("playerTurn");
 
@@ -164,9 +168,9 @@ $(function() {
 
     });
 
+
     // Permet l'envoie du username choisie au serveur
     socket.emit('username', username);
-
 
     // Permet d'envoyer le message se trouvant dans le form au serveur
     $('#messageForm').submit(function(e) {
@@ -187,22 +191,23 @@ $(function() {
         let objDiv = document.getElementById("chat");
         objDiv.scrollTop = objDiv.scrollHeight;
     });
-    // Change la couleur du nom du joueur par rapport à son tour
+
+    // Permet d'écrire le nom du premier joueur au debut d'une partie
     socket.on('assignAColor', function(userList) {
         document.getElementById("playerTurn").innerHTML = "Player " + userList[0] + " Turn"; //Change le text par rapport au tour du joueur
     });
 
     // Design html par rapport a la deconnexion , si il y a asser de joueur , et si c'est votre tour
     socket.on('afficherDéconnexion', function() {
-        document.getElementById('notYourTurn').style.visibility = 'visible';
-        document.getElementById('notYourTurn').innerHTML = "L'adversaire à quitté";
+        document.getElementById('errorMessages').style.visibility = 'visible';
+        document.getElementById('errorMessages').innerHTML = "L'adversaire à quitté";
     });
     socket.on('needMorePlayer', function() {
-        document.getElementById('notYourTurn').innerHTML = "You need 2 Players";
+        document.getElementById('errorMessages').innerHTML = "You need 2 Players";
     });
     socket.on('notYourTurn', function() {
-        document.getElementById('notYourTurn').style.visibility = 'visible';
-        document.getElementById('notYourTurn').innerHTML = "Not Your Turn";
+        document.getElementById('errorMessages').style.visibility = 'visible';
+        document.getElementById('errorMessages').innerHTML = "Not Your Turn";
     });
     // Permet d'afficher le nombre de player 
     socket.on('numberOfPlayer', function(numberOfPlayer) {
@@ -213,4 +218,4 @@ $(function() {
 function replay() {
     won = false;
     socket.emit('replay');
-};
+}
