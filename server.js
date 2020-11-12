@@ -34,10 +34,6 @@ io.on('connection', (socket) => {
 
     socket.emit("refreshTable", plateau)
 
-
-
-
-
     // Permet de dresser une list des joueurs via leur ID
     userID.push(socket.id);
     numberofPlayer += 1;
@@ -72,10 +68,10 @@ io.on('connection', (socket) => {
 
             // Si c'est bien le tour du joueur qui envoie une demande
             if (socket.id == userID[playerturn]) {
-                playerturn += 1;
+                
 
-                plateauRemplie();
-
+                
+                
                 // Vérification d'un numéro valide
                 if (emplacement > 8 || emplacement <= 0 && !isNaN(emplacement)) {
                     console.log("Mauvais Numéro");
@@ -86,6 +82,7 @@ io.on('connection', (socket) => {
                 for (let i = 5; i >= 0; i--) {
                     if (i == 0 && plateau[i][emplacement] != 0) {
                         console.log("Case Pleine");
+                        return 0;
                     }
                     if (plateau[i][emplacement] == 0) {
                         plateau[i][emplacement] = whoPlaying; //Place la case a l'emplacement donné donc collone a et ligne "case" i
@@ -112,6 +109,8 @@ io.on('connection', (socket) => {
 
                     }
                 }
+
+                playerturn += 1;
 
                 function checkWin() {
 
@@ -165,6 +164,7 @@ io.on('connection', (socket) => {
                         }
                     }
                     io.emit("plateauRemplie");
+                    return 1;
                 }
 
 
