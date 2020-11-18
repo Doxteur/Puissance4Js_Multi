@@ -174,13 +174,13 @@ $(function() {
 
     // Permet d'envoyer le message se trouvant dans le form au serveur
     $('#messageForm').submit(function(e) {
-        if($('#message').val()){
         e.preventDefault(); // prevents page reloading
-        socket.emit('getUsername', username);
-        socket.emit('chat message', $('#message').val());
-        $('#message').val('');
+        if ($('#message').val()) {
+            socket.emit('getUsername', username);
+            socket.emit('chat message', $('#message').val());
+            $('#message').val('');
+        }
         return false;
-    }
     });
 
     // Permet d'ajouté un Username et un message dans le chat

@@ -68,10 +68,10 @@ io.on('connection', (socket) => {
 
             // Si c'est bien le tour du joueur qui envoie une demande
             if (socket.id == userID[playerturn]) {
-                
 
-                
-                
+
+
+
                 // Vérification d'un numéro valide
                 if (emplacement > 8 || emplacement <= 0 && !isNaN(emplacement)) {
                     console.log("Mauvais Numéro");
@@ -186,6 +186,23 @@ io.on('connection', (socket) => {
         }
     });
 
+
+    function replay() {
+        plateau = [
+            [0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0],
+        ];
+        won = false;
+    }
+
+
+    // Chat
+
+
     // Si le serveur reçoit un username il va le push dans la list des users
     socket.on('username', (username) => {
 
@@ -200,7 +217,7 @@ io.on('connection', (socket) => {
     });
 
 
-    socket.on('getUsername', (username) => {
+    socket.on('getUsername', (username, message) => {
         io.emit('getUsername', username);
     });
     socket.on('chat message', (msg) => {
@@ -240,17 +257,6 @@ io.on('connection', (socket) => {
 
 });
 
-function replay() {
-    plateau = [
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-    ];
-    won = false;
-}
 
 // Permet d'heberger le serveur sur le port 5000.
 http.listen((process.env.PORT || 5000), () => {
