@@ -2,66 +2,42 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-
-
+    <link rel="stylesheet" href="index2.css" />
 </head>
 
 <body>
 
-    <script src="/socket.io/socket.io.js"></script>
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <link rel="stylesheet" href="index2.css">
-    <script src="solo.js"></script>
-    <!-- Bouton pour communiquer avec tableau -->
+    <div id="table">
 
+        <div id="wonText">
+        </div>
+        <div id="cell">
+            <button onclick="replay()" id="replayButton"> Replay </button>
+            <div id="disapear">
 
+                <h1 id="playerTurn">Player 1 Turn</h1>
 
-    <h1 id="playerTurn">Joueur <span id="Player">qsd</span>Tour</h1>
-    <button onclick="replay()" id="replayButton"> Replay </button>
+                <input type="number" name="a" id="a" /><br />
 
-    <h4 id="errorMessages"></h4>
-
-
-
-    <!-- <div id="disapear">
-                <form action="" id="placeColor">
-                    <input id="m" autocomplete="off" /><button>Placer</button>
-                </form>
-
-           
+                <button onclick="placeAColor(document.getElementById('a').value)" id="placeAColor">
+          Place
+        </button>
+            </div>
             <div id="download">
-                <a href="https://github.com/Doxteur/Puissance4Js_Multi" download="Projet.rar">
+                <a href="Projet.rar" download="Projet.rar">
                     <h2>Download Project</h2>
                 </a>
-            </div> -->
+            </div>
 
-
-
-    </div>
-
-    <script src="client.js"></script>
-    <div id="chatGlobal">
-        <h6>Chat : </h6>
-
-        <div id="chat">
-            <ul id="messageList">
-
-            </ul>
         </div>
-        <form action="" id="messageForm">
-            <input id="message" autocomplete="off" /><button>Send</button>
-        </form>
     </div>
+    <script src="solo.js"></script>
 
-    <div id="Joueur">
-        <h3 id="listJoueur"></h3>
-        <h3>Player in the room :</h3>
-        <h3 id="nombreDeJoueur"></h3>
-    </div>
 
 </body>
+
 
 </html>
