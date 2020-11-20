@@ -69,16 +69,12 @@ io.on('connection', (socket) => {
             // Si c'est bien le tour du joueur qui envoie une demande
             if (socket.id == userID[playerturn]) {
 
-
-
-
                 // Vérification d'un numéro valide
                 if (emplacement > 8 || emplacement <= 0 && !isNaN(emplacement)) {
                     console.log("Mauvais Numéro");
                     return 0;
                 }
                 emplacement--; //Permet de de pouvoir mettre 1 en collone et d'avoir la collone 1 et non pas 0.
-
                 for (let i = 5; i >= 0; i--) {
                     if (i == 0 && plateau[i][emplacement] != 0) {
                         console.log("Case Pleine");
