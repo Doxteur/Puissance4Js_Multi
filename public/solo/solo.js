@@ -94,7 +94,15 @@
 
         let theDiv = document.getElementById("wonText");
         theDiv.innerHTML += "Player " + whoPlaying + " Won";
+        if (whoPlaying == 2) {
+            theDiv.style.color = "Yellow";
+        }
         theDiv.style.border = "solid yellow 15px";
+        let displaynoneTable = document.getElementById("table");
+        let displaynoneTurn = document.getElementById("playerTurn");
+        displaynoneTable.style.display = "none"
+        displaynoneTurn.style.display = "none"
+
 
     }
 

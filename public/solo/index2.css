@@ -97,6 +97,14 @@ td button {
     background-color: inherit;
 }
 
+#wonText {
+    font-size: 50px;
+}
+
+#table {
+    text-align: center;
+}
+
 
 /* 
 a {
