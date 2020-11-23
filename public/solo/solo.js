@@ -15,7 +15,7 @@
     console.log(plateau.join("\n") + "\n\n"); //Permet de mettre le tableau en colonne dans la console.
 
     function placeAColor(a) { //Permet de placer un nombre dans une collone a 
-
+        score();
         plateauRemplie();
         if (canPlay == true) {
             if (a > 8 || a <= 0) {
@@ -129,6 +129,46 @@
 
     }
 
+    // Score Table
+    function score() {
+        // Score Horizontale
+        let score = 0;
+        for (let i = 0; i < 6; i++) {
+            for (let j = 0; j < 6; j++) {
+
+                for (let result of plateau) {
+                    console.log(result);
+                    const countResult = result.filter(i => i === 2).length;
+                    const zerocountResult = result.filter(i => i === 0).length;
+                    console.log(zerocountResult)
+                    if (countResult >= 4) {
+                        score += 100
+                    }
+                    if (countResult > 3 && zerocountResult == 1) {
+                        score += 10
+                    }
+                    console.log(score)
+                }
+                return score
+            }
+        }
+
+    }
+
+
+    // Minimax Alogrithm 
+    function initialiseIA() {
+        isAiActive = true;
+    }
+
+    function IA() {
+        if (isAiActive && whoPlaying == 2) {
+
+
+        }
+        // https://softwareengineering.stackexchange.com/questions/263514/why-does-this-evaluation-function-work-in-a-connect-four-game-in-java
+    }
+
     function generate_table() {
 
         var body = document.getElementsByTagName("body")[0];
@@ -170,60 +210,4 @@
         tbl.appendChild(tblBody);
         body.appendChild(tbl);
         tbl.setAttribute("border", "2");
-    }
-
-
-
-
-    // Minimax Alogrithm 
-    function initialiseIA() {
-        isAiActive = true;
-    }
-
-    function IA() {
-        if (isAiActive && whoPlaying == 2) {
-
-            for (let i = 0; i <= 5; i++) {
-                for (let j = 0; j <= 6; j++) {
-                    //Premier numéro == ligne deusieme numéro collone
-                    if (plateau[i][j] == 1 && plateau[i - 1][j - 1] == 1 && plateau[i - 2][j - 2] == 1 && plateau[i - 2][j - 3] != 0) {
-
-                        whoPlaying = 2
-                        placeAColor(j + 1);
-                        console.log("diagonal - ")
-                        return 1;
-                    }
-                    if (plateau[i][j] == 1 && plateau[i - 1][j + 1] == 1 && plateau[i - 2][j + 2] == 1 && plateau[i - 2][j + 3] != 0) {
-                        whoPlaying = 2
-
-                        placeAColor(j + 4)
-                        console.log("diagonal + ")
-
-                        return 1;
-                    }
-
-                    if (i >= 3) {
-                        if (plateau[i][j] == 1 && plateau[i - 1][j] == 1 && plateau[i - 2][j] == 1 && plateau[i - 3][j] == 0) {
-                            whoPlaying = 2
-                            placeAColor(j + 1);
-                            console.log("Yahoo")
-                            return 1;
-                        }
-                    }
-                    if (plateau[i][j] == 1 && plateau[i][j + 1] == 1 && plateau[i][j + 2] == 1 && plateau[i][j + 3] == 0) {
-                        whoPlaying = 2
-                        placeAColor(j + 4);
-                        console.log("Yahoo")
-
-                        return 1;
-                    }
-
-                }
-            }
-            let randomNumber = Math.floor(Math.random() * (8 - 1)) + 1;
-            placeAColor(randomNumber);
-            return 1;
-
-        }
-        // https://softwareengineering.stackexchange.com/questions/263514/why-does-this-evaluation-function-work-in-a-connect-four-game-in-java
     }
