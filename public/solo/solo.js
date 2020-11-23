@@ -129,6 +129,11 @@
 
     }
 
+    function evaluation(situation, whoPlaying) {}
+
+    function minimax(situation, whoPlaying) {
+
+    }
     // Score Table
     function score() {
         // Score Horizontale
@@ -161,13 +166,7 @@
         isAiActive = true;
     }
 
-    function IA() {
-        if (isAiActive && whoPlaying == 2) {
 
-
-        }
-        // https://softwareengineering.stackexchange.com/questions/263514/why-does-this-evaluation-function-work-in-a-connect-four-game-in-java
-    }
 
     function generate_table() {
 
