@@ -129,13 +129,9 @@
 
     }
 
-    function evaluation(situation, whoPlaying) {}
 
-    function minimax(situation, whoPlaying) {
-
-    }
     // Score Table
-    function score() {
+    function evaluateWindow(plateau, whoPlaying) {
         // Score Horizontale
         let score = 0;
         for (let i = 0; i < 6; i++) {
@@ -144,13 +140,18 @@
                 for (let result of plateau) {
                     console.log(result);
                     const countResult = result.filter(i => i === 2).length;
+                    const countResultAdversaire = result.filter(i => i === 1).length;
                     const zerocountResult = result.filter(i => i === 0).length;
                     console.log(zerocountResult)
                     if (countResult >= 4) {
                         score += 100
+                    } else if (countResult == 3 && zerocountResult == 1) {
+                        score += 5
+                    } else if (countResult == 2 && zerocountResult == 1) {
+                        score += 5
                     }
-                    if (countResult > 3 && zerocountResult == 1) {
-                        score += 10
+                    if (countResultAdversaire == 3 && zerocountResult == 1) {
+                        score -= 4
                     }
                     console.log(score)
                 }
@@ -160,6 +161,9 @@
 
     }
 
+    function score_position(plateau, whoPlaying) {
+
+    }
 
     // Minimax Alogrithm 
     function initialiseIA() {
