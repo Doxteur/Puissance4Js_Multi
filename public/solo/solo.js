@@ -225,4 +225,5 @@
             return 1;
 
         }
+        // https://softwareengineering.stackexchange.com/questions/263514/why-does-this-evaluation-function-work-in-a-connect-four-game-in-java
     }
