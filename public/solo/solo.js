@@ -1,4 +1,6 @@
     generate_table();
+
+    let isAiActive = false;
     let whoPlaying = 1;
     let canPlay = true;
 
@@ -58,12 +60,13 @@
             }
             console.log(plateau.join("\n") + "\n\n"); //Permet de mettre le tableau en colonne sinon il est en ligne
         }
+        IA();
+
     }
 
     function checkWin() { // A toi de le faire Fin du coup je l'ai fais sauf diago
         for (let i = 0; i <= 5; i++) {
             for (let j = 0; j <= 6; j++) {
-
                 //Premier numéro == ligne deusieme numéro collone
                 if (plateau[i][j] == whoPlaying && plateau[i][j + 1] == whoPlaying && plateau[i][j + 2] == whoPlaying && plateau[i][j + 3] == whoPlaying) {
                     Won();
@@ -89,19 +92,14 @@
 
         console.log("You won !!");
         canPlay = false;
-
-
-
-        let theDiv = document.getElementById("wonText");
-        theDiv.innerHTML += "Player " + whoPlaying + " Won";
+        let wontext = document.getElementById("wonText");
+        wontext.innerHTML += "Player " + whoPlaying + " Won";
         if (whoPlaying == 2) {
-            theDiv.style.color = "Yellow";
+            wontext.style.color = "Yellow";
         }
-        theDiv.style.border = "solid yellow 15px";
-        let displaynoneTable = document.getElementById("table");
-        let displaynoneTurn = document.getElementById("playerTurn");
-        displaynoneTable.style.display = "none"
-        displaynoneTurn.style.display = "none"
+        wontext.style.border = "solid yellow 15px";
+        document.getElementById("table").style.display = "none"
+        document.getElementById("playerTurn").style.display = "none"
 
 
     }
@@ -119,16 +117,15 @@
             }
         }
         plateauRemplieChangeDesign();
-
     }
 
     function plateauRemplieChangeDesign() {
-
-        console.log("Tableau Remplie");
         canPlay = false;
-
         let theDiv = document.getElementById("wonText");
         theDiv.innerHTML += "Tableau Complet";
+        document.getElementById("table").style.display = "none"
+        document.getElementById("playerTurn").style.display = "none"
+
 
     }
 
@@ -179,11 +176,53 @@
 
 
     // Minimax Alogrithm 
-
-    function evaluateWindow() {
-
+    function initialiseIA() {
+        isAiActive = true;
     }
 
-    function Minimax() {
+    function IA() {
+        if (isAiActive && whoPlaying == 2) {
 
+            for (let i = 0; i <= 5; i++) {
+                for (let j = 0; j <= 6; j++) {
+                    //Premier numéro == ligne deusieme numéro collone
+                    if (plateau[i][j] == 1 && plateau[i - 1][j - 1] == 1 && plateau[i - 2][j - 2] == 1 && plateau[i - 2][j - 3] != 0) {
+
+                        whoPlaying = 2
+                        placeAColor(j + 1);
+                        console.log("diagonal - ")
+                        return 1;
+                    }
+                    if (plateau[i][j] == 1 && plateau[i - 1][j + 1] == 1 && plateau[i - 2][j + 2] == 1 && plateau[i - 2][j + 3] != 0) {
+                        whoPlaying = 2
+
+                        placeAColor(j + 4)
+                        console.log("diagonal + ")
+
+                        return 1;
+                    }
+
+                    if (i >= 3) {
+                        if (plateau[i][j] == 1 && plateau[i - 1][j] == 1 && plateau[i - 2][j] == 1 && plateau[i - 3][j] == 0) {
+                            whoPlaying = 2
+                            placeAColor(j + 1);
+                            console.log("Yahoo")
+                            return 1;
+                        }
+                    }
+                    if (plateau[i][j] == 1 && plateau[i][j + 1] == 1 && plateau[i][j + 2] == 1 && plateau[i][j + 3] == 0) {
+                        whoPlaying = 2
+                        placeAColor(j + 4);
+                        console.log("Yahoo")
+
+                        return 1;
+                    }
+
+                }
+            }
+            let randomNumber = Math.floor(Math.random() * (8 - 1)) + 1;
+            placeAColor(randomNumber);
+            return 1;
+
+        }
     }
