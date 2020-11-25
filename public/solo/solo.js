@@ -15,7 +15,7 @@
     console.log(plateau.join("\n") + "\n\n"); //Permet de mettre le tableau en colonne dans la console.
 
     function placeAColor(a) { //Permet de placer un nombre dans une collone a 
-        score();
+
         plateauRemplie();
         if (canPlay == true) {
             if (a > 8 || a <= 0) {
@@ -130,47 +130,93 @@
     }
 
 
-    // Score Table
-    function evaluateWindow(plateau, whoPlaying) {
-        // Score Horizontale
-        let score = 0;
-        for (let i = 0; i < 6; i++) {
-            for (let j = 0; j < 6; j++) {
 
-                for (let result of plateau) {
-                    console.log(result);
-                    const countResult = result.filter(i => i === 2).length;
-                    const countResultAdversaire = result.filter(i => i === 1).length;
-                    const zerocountResult = result.filter(i => i === 0).length;
-                    console.log(zerocountResult)
-                    if (countResult >= 4) {
-                        score += 100
-                    } else if (countResult == 3 && zerocountResult == 1) {
-                        score += 5
-                    } else if (countResult == 2 && zerocountResult == 1) {
-                        score += 5
-                    }
-                    if (countResultAdversaire == 3 && zerocountResult == 1) {
-                        score -= 4
-                    }
-                    console.log(score)
-                }
-                return score
-            }
-        }
 
-    }
-
-    function score_position(plateau, whoPlaying) {
-
-    }
 
     // Minimax Alogrithm 
     function initialiseIA() {
         isAiActive = true;
     }
 
+    function IA() {
+        if (whoPlaying == 2) {
 
+            // if (IACheckHorizontal()) {
+            //     return 1
+            // }
+            // if (IACheckVertical()) {
+            //     return 1
+            // }
+            // if (IACheckDiagolane()) {
+            //     return 1;
+            // }
+            // let randomNumber = Math.floor(Math.random() * (8 - 1)) + 1;
+            // placeAColor(randomNumber);
+            // return 1;
+        }
+
+
+    }
+
+    function IACheckHorizontal() {
+        for (let i = 0; i < 6; i++) {
+            for (let j = 0; j < 7; j++) {
+                if (plateau[i][j] == 1 && plateau[i][j + 1] != 2) {
+                    if (plateau[i][j + 1]) {
+                        if (plateau[i][j + 2] == 1 && plateau[i][j + 3] == 0 && plateau[i + 1][j + 3] != 0) {
+                            placeAColor(j + 4);
+                            return 1;
+                        } else if (plateau[i][j + 3] == 1 && plateau[i][j + 2] == 0) {
+
+                            placeAColor(j + 3);
+                            return 1;
+                        }
+
+                    } else if (plateau[i][j + 2] == 1 && plateau[i][j + 3] == 1 && plateau[i][j + 1] == 0) {
+                        console.log("Tuché")
+                        placeAColor(j + 2);
+                        return 1
+                    }
+                } else if (plateau[i][j] == 0 && plateau[i][j + 1] == 1 && plateau[i][j + 2] == 1 && plateau[i][j + 3] == 1) {
+                    placeAColor(j + 1);
+                    return 1;
+                }
+            }
+
+        }
+    }
+
+    function IACheckVertical() {
+        for (let i = 0; i < 6; i++) {
+            for (let j = 0; j < 7; j++) {
+                if (plateau[i][j] == 1 && plateau[i - 1][j] != 2) {
+                    if (plateau[i - 1][j]) {
+                        if (plateau[i - 2][j] == 1 && plateau[i - 3][j] == 0) {
+                            placeAColor(j + 1);
+                            return 1;
+                        }
+                    }
+
+                }
+            }
+        }
+    }
+
+    function IACheckDiagolane() {
+        for (let i = 0; i < 6; i++) {
+            for (let j = 0; j < 7; j++) {
+                if (plateau[i][j] == 1) {
+                    if (plateau[i - 1][j + 1]) {
+                        if (plateau[i - 2][j + 2] == 1 && plateau[i - 3][j + 3] == 0) {
+
+                            placeAColor(j + 4);
+                            return 1;
+                        }
+                    }
+                }
+            }
+        }
+    }
 
     function generate_table() {
 
