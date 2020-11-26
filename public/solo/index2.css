@@ -106,10 +106,11 @@ td button {
 }
 
 #iaButton {
+    position: absolute;
     font-size: 30px;
     margin-top: 15px;
-    width: 100px;
-    height: 50px;
+    width: 200px;
+    height: 150px;
     margin-bottom: 50px;
 }
 

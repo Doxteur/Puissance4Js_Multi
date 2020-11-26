@@ -139,20 +139,20 @@
     }
 
     function IA() {
-        if (whoPlaying == 2) {
+        if (whoPlaying == 2 && isAiActive) {
 
-            // if (IACheckHorizontal()) {
-            //     return 1
-            // }
-            // if (IACheckVertical()) {
-            //     return 1
-            // }
-            // if (IACheckDiagolane()) {
-            //     return 1;
-            // }
-            // let randomNumber = Math.floor(Math.random() * (8 - 1)) + 1;
-            // placeAColor(randomNumber);
-            // return 1;
+            if (IACheckHorizontal()) {
+                return 1
+            }
+            if (IACheckVertical()) {
+                return 1
+            }
+            if (IACheckDiagolane()) {
+                return 1;
+            }
+            let randomNumber = Math.floor(Math.random() * (8 - 1)) + 1;
+            placeAColor(randomNumber);
+            return 1;
         }
 
 
@@ -163,7 +163,7 @@
             for (let j = 0; j < 7; j++) {
                 if (plateau[i][j] == 1 && plateau[i][j + 1] != 2) {
                     if (plateau[i][j + 1]) {
-                        if (plateau[i][j + 2] == 1 && plateau[i][j + 3] == 0 && plateau[i + 1][j + 3] != 0) {
+                        if (plateau[i][j + 2] == 1 && plateau[i][j + 3] == 0) {
                             placeAColor(j + 4);
                             return 1;
                         } else if (plateau[i][j + 3] == 1 && plateau[i][j + 2] == 0) {
