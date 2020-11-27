@@ -12,54 +12,62 @@
         [0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0],
     ];
-    console.log(plateau.join("\n") + "\n\n"); //Permet de mettre le tableau en colonne dans la console.
 
     function placeAColor(a) { //Permet de placer un nombre dans une collone a 
-
-        plateauRemplie();
         if (canPlay == true) {
-            if (a > 8 || a <= 0) {
-                console.log("Mauvais Numéro");
-                return 0;
-            }
-            console.clear();
-            a--; //Permet de de pouvoir mettre 1 en collone et d'avoir la collone 1 pas 0.
+            a--;
             for (let i = 5; i >= 0; i--) {
-                if (i == 0 && plateau[i][a] != 0) {
-                    console.log("Case Pleine");
-                }
+                // if (i == 0 && plateau[i][a] != 0) {
+                //     console.log("Case Pleine");
+                // }
+
                 if (plateau[i][a] == 0) {
                     plateau[i][a] = whoPlaying; //Place la case a l'emplacement donné donc collone a et ligne "case" i
 
-                    let newi = i;
-                    newi = i.toString();
-                    let newa = a;
-                    newa = newa.toString();
-                    let newnewvar = newi.concat(newa);
-                    console.log(newnewvar);
-                    checkWin();
-
-                    if (whoPlaying == 1) {
-                        whoPlaying = 2;
-                    } else {
-                        whoPlaying = 1;
-                    }
-                    document.getElementById("playerTurn").innerHTML = "Player " + whoPlaying + " Turn"; //Change le text par rapport au tour du joueur
-                    if (whoPlaying == 1) {
-                        document.getElementById("playerTurn").style.color = "rgb(253, 90, 90)";
-                        document.getElementById(newnewvar).style.backgroundColor = "#F8E957";
-
-                    } else {
-                        document.getElementById("playerTurn").style.color = "#F8E957";
-                        document.getElementById(newnewvar).style.backgroundColor = "#FD5A5A";
-
-                    }
                     break;
                 }
             }
             console.log(plateau.join("\n") + "\n\n"); //Permet de mettre le tableau en colonne sinon il est en ligne
+
         }
-        IA();
+
+    }
+
+    function changeTour() {
+
+        if (whoPlaying == 1) {
+
+            whoPlaying = 2;
+        } else {
+            whoPlaying = 1;
+        }
+    }
+
+    function changeTourDesign() {
+        document.getElementById("playerTurn").innerHTML = "Player " + whoPlaying + " Turn"; //Change le text par rapport au tour du joueur
+        for (let i = 0; i <= 5; i++) {
+            for (let j = 0; j <= 6; j++) {
+                if (plateau[i][j] == 1) {
+                    let tempi = i.toString();
+                    let tempJ = j.toString();
+                    let newvar = tempi.concat(tempJ)
+                    document.getElementById(newvar).style.backgroundColor = "#FD5A5A";
+
+                } else if (plateau[i][j] == 2) {
+                    let tempi = i.toString();
+                    let tempJ = j.toString();
+                    let newvar = tempi.concat(tempJ)
+                    document.getElementById(newvar).style.backgroundColor = "#F8E957";
+                }
+            }
+            if (whoPlaying == 1) {
+                document.getElementById("playerTurn").style.color = "rgb(253, 90, 90)";
+
+            } else {
+                document.getElementById("playerTurn").style.color = "#F8E957";
+
+            }
+        }
 
     }
 
@@ -96,7 +104,6 @@
             wontext.style.color = "#F8E957";
         } else {
             wontext.style.color = "#FD5A5A";
-
         }
         document.getElementById("iaButton").style.display = "none"
         document.getElementById("playerTurn").style.display = "none"
@@ -112,6 +119,7 @@
         for (let i = 0; i <= 5; i++) {
             for (let j = 0; j <= 6; j++) {
                 if (plateau[i][j] == 0) {
+
                     return 0;
                 }
             }
@@ -140,6 +148,14 @@
 
     function IA() {
         if (whoPlaying == 2 && isAiActive) {
+
+
+
+
+
+
+
+
 
             //     if (IACheckHorizontal()) {
             //         return 1
@@ -248,6 +264,10 @@
                 btn.onclick = function() {
 
                     placeAColor(emplacementBouton);
+                    changeTourDesign();
+                    checkWin();
+                    changeTour();
+
                 };
                 cell.appendChild(cellText);
                 cell.appendChild(btn)
