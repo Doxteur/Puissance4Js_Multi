@@ -26,7 +26,6 @@
             a--; //Permet de de pouvoir mettre 1 en collone et d'avoir la collone 1 pas 0.
             for (let i = 5; i >= 0; i--) {
                 if (i == 0 && plateau[i][a] != 0) {
-                    /* System a opti si tu veux le faire. Mais en vraie y'en a pas besoins je l'ai fais juste pour avoir le message d'erreur*/
                     console.log("Case Pleine");
                 }
                 if (plateau[i][a] == 0) {
@@ -47,12 +46,12 @@
                     }
                     document.getElementById("playerTurn").innerHTML = "Player " + whoPlaying + " Turn"; //Change le text par rapport au tour du joueur
                     if (whoPlaying == 1) {
-                        document.getElementById("playerTurn").style.color = "Red";
-                        document.getElementById(newnewvar).style.backgroundColor = "Yellow";
+                        document.getElementById("playerTurn").style.color = "rgb(253, 90, 90)";
+                        document.getElementById(newnewvar).style.backgroundColor = "#F8E957";
 
                     } else {
-                        document.getElementById("playerTurn").style.color = "Yellow";
-                        document.getElementById(newnewvar).style.backgroundColor = "Red";
+                        document.getElementById("playerTurn").style.color = "#F8E957";
+                        document.getElementById(newnewvar).style.backgroundColor = "#FD5A5A";
 
                     }
                     break;
@@ -64,10 +63,9 @@
 
     }
 
-    function checkWin() { // A toi de le faire Fin du coup je l'ai fais sauf diago
+    function checkWin() {
         for (let i = 0; i <= 5; i++) {
             for (let j = 0; j <= 6; j++) {
-                //Premier numéro == ligne deusieme numéro collone
                 if (plateau[i][j] == whoPlaying && plateau[i][j + 1] == whoPlaying && plateau[i][j + 2] == whoPlaying && plateau[i][j + 3] == whoPlaying) {
                     Won();
                     return 1;
@@ -95,12 +93,14 @@
         let wontext = document.getElementById("wonText");
         wontext.innerHTML += "Player " + whoPlaying + " Won";
         if (whoPlaying == 2) {
-            wontext.style.color = "Yellow";
-        }
-        wontext.style.border = "solid yellow 15px";
-        document.getElementById("table").style.display = "none"
-        document.getElementById("playerTurn").style.display = "none"
+            wontext.style.color = "#F8E957";
+        } else {
+            wontext.style.color = "#FD5A5A";
 
+        }
+        document.getElementById("iaButton").style.display = "none"
+        document.getElementById("playerTurn").style.display = "none"
+        wontext.style.display = "inherit";
 
     }
 
@@ -141,18 +141,19 @@
     function IA() {
         if (whoPlaying == 2 && isAiActive) {
 
-            if (IACheckHorizontal()) {
-                return 1
-            }
-            if (IACheckVertical()) {
-                return 1
-            }
-            if (IACheckDiagolane()) {
-                return 1;
-            }
-            let randomNumber = Math.floor(Math.random() * (8 - 1)) + 1;
-            placeAColor(randomNumber);
-            return 1;
+            //     if (IACheckHorizontal()) {
+            //         return 1
+            //     }
+            //     if (IACheckVertical()) { 
+            //         return 1
+            //     }
+            //     if (IACheckDiagolane()) {
+            //         return 1;
+            //     }
+            //     let randomNumber = Math.floor(Math.random() * (8 - 1)) + 1;
+            //     placeAColor(randomNumber);
+            //     return 1;
+
         }
 
 

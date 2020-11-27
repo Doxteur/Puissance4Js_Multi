@@ -128,9 +128,9 @@ $(function() {
         if (won == false) {
             document.getElementById('errorMessages').style.visibility = 'hidden';
             if (whoPlaying == 1) {
-                document.getElementById(newnewvar).style.backgroundColor = "Red";
+                document.getElementById(newnewvar).style.backgroundColor = "#FF4F4F";
                 document.getElementById("playerTurn").innerHTML = "Player " + userList[1] + " Turn"; //Change le text par rapport au tour du joueur
-                document.getElementById("playerTurn").style.color = "Yellow";
+                document.getElementById("playerTurn").style.color = "#F8E957";
 
                 $("td button").hover(function() {
                     $(this).css("background-color", "rgba(255, 255,0, .1)");
@@ -147,7 +147,7 @@ $(function() {
 
                 document.getElementById("playerTurn").innerHTML = "Player " + userList[0] + " Turn"; //Change le text par rapport au tour du joueur
                 document.getElementById("playerTurn").style.color = "#FD5A5A";
-                document.getElementById(newnewvar).style.backgroundColor = "Yellow";
+                document.getElementById(newnewvar).style.backgroundColor = "#F8E957";
             }
         }
     });
