@@ -107,7 +107,7 @@ $(function() {
         won = false;
         var tdElement = document.getElementsByTagName('td');
         for (var i = 0; i < tdElement.length; i++) {
-            tdElement[i].style.background = 'none';
+            tdElement[i].style.backgroundColor = 'rgba(250, 250, 250, 0.5)';
         }
     });
 
