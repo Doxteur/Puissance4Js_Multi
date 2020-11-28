@@ -11,5 +11,5 @@ localhost:5000
 Le mode solo se trouve dans le dossier public solo 
 Le serveur est gérer avec le script server.js et le client par le script client.js
 
-
+Une version disponible sur le web se trouve sur www.jimmydoussain.fr
 PS: Le dossier solo est le plus avancée en terme de fonctionnalitées
