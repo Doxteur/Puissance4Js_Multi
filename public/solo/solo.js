@@ -79,6 +79,11 @@
         snd.play();
     }
 
+    function wonSound() {
+        var wonSound = new Audio("Audio/winsound.wav"); // buffers automatically when created
+        wonSound.play();
+    }
+
     function placeAColor(a) { //Permet de placer un nombre dans une collone a 
 
         if (canPlay == true) {
@@ -185,7 +190,7 @@
     }
 
     function Won() { //Change le design si il y a une victoire
-
+        wonSound();
         console.log("You won !!");
         canPlay = false;
         let wontext = document.getElementById("wonText");
