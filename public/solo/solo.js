@@ -54,6 +54,8 @@
                         changeTourEtHover();
                         changeTourDesign();
                         playSound();
+                        plateauRemplie();
+
                     } else {
                         return 1;
                     }
@@ -273,7 +275,6 @@
         for (let i = 0; i <= 5; i++) {
             for (let j = 0; j <= 6; j++) {
                 if (plateau[i][j] == 0) {
-
                     return 0;
                 }
             }
@@ -283,10 +284,8 @@
 
     function plateauRemplieChangeDesign() { //Change le design si le plateau est remplie 
         canPlay = false;
-        let theDiv = document.getElementById("wonText");
-        theDiv.innerHTML += "Tableau Complet";
-        document.getElementById("table").style.display = "none"
-        document.getElementById("playerTurn").style.display = "none"
+        document.getElementById("playerTurn").innerHTML = "Plateau Remplie"
+        console.log("Plateau Remplie")
 
 
     }
@@ -317,15 +316,11 @@
             if (IACheckDiagolaneNegative()) {
                 return 1;
             }
-            // if (!savoirSicollonePleine(4)) {
-            //     InitalizePlacement(4);
-            //     return 1;
-            // }
-            let randomNumber = Math.floor(Math.random() * (8 - 1)) + 1;
-            while (savoirSicollonePleine(randomNumber)) {
-                randomNumber = Math.floor(Math.random() * (8 - 1)) + 1;
+            if (savoirSicollonePleine(3) == false) {
+                InitalizePlacement(4);
+                return 1;
             }
-
+            let randomNumber = Math.floor(Math.random() * (8 - 1)) + 1;
             InitalizePlacement(randomNumber);
             return 1;
 
@@ -345,9 +340,11 @@
     function InitalizePlacement(where) {
 
         placeAColor(where);
+
         checkWin();
         changeTourEtHover();
         changeTourDesign();
+        plateauRemplie();
     }
 
     function IACheckHorizontal() {
