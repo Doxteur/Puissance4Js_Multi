@@ -1,7 +1,7 @@
 # Puissance4Js_Multi
-Ce projet est un puissance 4 dévelopée en HTML/CSS/JS par Jimmy et Pierre 
+Ce projet est un puissance 4 dévelopée en HTML/CSS/JS par Jimmy et Pierre dans le cadre d'un TP
 
-Pour pouvoir jouée il vous faut node js puis vous rendre dans a la racine du dossiers
+Pour pouvoir jouée il vous faut node-js puis vous rendre dans a la racine du dossier
 Ensuite taper la commande 
 npm install qui permetra d'installer les modules 
 puis 
