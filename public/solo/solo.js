@@ -12,7 +12,7 @@
         [0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0],
     ];
-    // Permet un hover rouge des le debut du jeux
+    // Permet un hover des cases de la grille en rouge
     $("td button").hover(function() {
         $(this).css("background-color", "rgba(255, 0, 0, .1)");
     }, function() {
@@ -47,7 +47,6 @@
                 var cellText = document.createTextNode(" ");
                 let emplacementBouton = newvar % 10 + 1;
 
-                // Quand le bouton est cliquer il envoie au serveur l'emplacement de la case qui doit changer
                 btn.onclick = function() {
 
                     if (placeAColor(emplacementBouton)) {
@@ -58,6 +57,7 @@
                     } else {
                         return 1;
                     }
+
                     if (isAiActive)
                         IA();
                 };
@@ -75,19 +75,19 @@
     }
 
     function playSound() {
-        var snd = new Audio("Audio/coin.wav"); // buffers automatically when created
+        var snd = new Audio("Audio/coin.wav");
         snd.play();
     }
 
     function wonSound() {
-        var wonSound = new Audio("Audio/winsound.wav"); // buffers automatically when created
+        var wonSound = new Audio("Audio/winsound.wav");
         wonSound.play();
     }
 
-    function placeAColor(a) { //Permet de placer un nombre dans une collone a 
+    function placeAColor(a) { //Permet de placer une piece dans une collone a 
 
-        if (canPlay == true) {
-            a--;
+        if (canPlay == true) { // Si la partie n'est pas finie
+            a--; // Ne sert plus c'étais pour quand l'utilisateur rentrai un chiffre a la main
             for (let i = 5; i >= 0; i--) {
                 if (plateau[0][a] != 0) {
                     console.log("Case Pleine");
@@ -169,6 +169,8 @@
                         Won();
                         return 1;
                     }
+                    //Check Diagonal
+
                     if (plateau[i][j] == whoPlaying && plateau[i - 1][j - 1] == whoPlaying && plateau[i - 2][j - 2] == whoPlaying && plateau[i - 3][j - 3] == whoPlaying) {
 
                         highlightWon(i, j, "diagonalNegative");
@@ -183,7 +185,6 @@
                         Won();
                         return 1;
                     }
-                    //Check Diagonal
                 }
             }
         }
@@ -296,6 +297,8 @@
     // IA  
     function initialiseIA() {
         isAiActive = true;
+        document.getElementById("iaButton").style.backgroundColor = "#FD5A5A"
+
     }
 
     function IA() {

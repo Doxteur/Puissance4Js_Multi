@@ -134,13 +134,35 @@ td button {
     text-align: center;
 }
 
-#iaButton {
+#IA {
     position: absolute;
+    height: 400px;
+    width: 350px;
+    background-color: #2A5A8A;
+    margin: 100px 0 0 150px;
+    text-align: center;
+}
+
+#iaButton {
     font-size: 30px;
     margin-top: 15px;
-    width: 200px;
-    height: 150px;
-    margin-bottom: 50px;
+    border: none;
+    background-color: #397abb;
+    color: white;
+    font-family: "Helvetica";
+    font-size: 35px;
+    padding: 35px;
+}
+
+#IA img {
+    width: 250px;
+}
+
+#iaButton:hover {
+    transition: background-color 0.5s ease-in-out;
+    background-color: #418bd6;
+    pointer-events: visible;
+    cursor: pointer;
 }
 
 
