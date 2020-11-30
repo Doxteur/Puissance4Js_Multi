@@ -12,13 +12,14 @@
         [0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0],
     ];
-
     // Permet un hover rouge des le debut du jeux
     $("td button").hover(function() {
         $(this).css("background-color", "rgba(255, 0, 0, .1)");
     }, function() {
         $(this).css("background-color", "inherit");
     });
+
+
 
     //Génération du tableau  
     function generate_table() {
@@ -314,7 +315,9 @@
                 return 1;
             }
             let randomNumber = Math.floor(Math.random() * (8 - 1)) + 1;
-            console.log("jouer random")
+            while (savoirSicollonePleine(randomNumber)) {
+                randomNumber = Math.floor(Math.random() * (8 - 1)) + 1;
+            }
 
             InitalizePlacement(randomNumber);
             return 1;
@@ -322,6 +325,12 @@
         }
 
 
+    }
+
+    function savoirSicollonePleine(collone) {
+        if (plateau[0][collone] != 0) {
+            return true;
+        }
     }
 
     function InitalizePlacement(where) {
@@ -362,14 +371,16 @@
     function IACheckVertical() {
         for (let i = 0; i < 6; i++) {
             for (let j = 0; j < 7; j++) {
-                if (plateau[i][j] == 1 && plateau[i - 1][j] != 2) {
-                    if (plateau[i - 1][j]) {
-                        if (plateau[i - 2][j] == 1 && plateau[i - 3][j] == 0) {
-                            InitalizePlacement(j + 1);
-                            return 1;
+                if (i >= 3) {
+                    if (plateau[i][j] == 1 && plateau[i - 1][j] != 2) {
+                        if (plateau[i - 1][j]) {
+                            if (plateau[i - 2][j] == 1 && plateau[i - 3][j] == 0) {
+                                InitalizePlacement(j + 1);
+                                return 1;
+                            }
                         }
-                    }
 
+                    }
                 }
             }
         }
@@ -389,14 +400,20 @@
                                 InitalizePlacement(j + 3);
                                 return 1;
                             }
+
                         } else if (plateau[i - 1][j + 1] == 0 && plateau[i - 2][j + 2] == 1 && plateau[i - 3][j + 3] == 1 && plateau[i][j + 1] != 0) {
                             InitalizePlacement(j + 2);
                             return 1;
                         }
+
                     }
+
+
                     if (plateau[i][j] == 0 && plateau[i - 1][j + 1] == 1 && plateau[i - 2][j + 2] == 1 && plateau[i - 3][j + 3] == 1 && (i == 5 || plateau[i - 2][j + 1] != 0)) {
                         console.log(j);
+
                         InitalizePlacement(j + 1);
+
                         return 1;
                     }
                 }
@@ -407,28 +424,29 @@
     function IACheckDiagolaneNegative() {
         for (let i = 0; i < 6; i++) {
             for (let j = 0; j < 7; j++) {
-                if (i > 3) {
+                if (i >= 3) {
                     if (plateau[i][j] == 1 && plateau[i - 1][j - 1] != 2) {
                         if (plateau[i - 1][j - 1]) {
-                            if (plateau[i - 2][j - 2] == 1 && plateau[i - 3][j - 3] == 0) {
-                                InitalizePlacement(j - 3);
+                            if (plateau[i - 2][j - 2] == 1 && plateau[i - 3][j - 3] == 0 && (plateau[i - 2][j - 3] != 0)) {
+                                InitalizePlacement(j - 2);
                                 return 1;
                             }
-                            if (plateau[i - 2][j - 2] == 0 && plateau[i - 3][j - 3] == 1) {
-                                InitalizePlacement(j - 3);
+                            if (plateau[i - 2][j - 2] == 0 && plateau[i - 3][j - 3] == 1 && (plateau[i - 1][j - 2] != 0)) {
+                                InitalizePlacement(j - 1);
                                 return 1;
                             }
 
-                        } else if (plateau[i - 1][j - 1] == 0 && plateau[i - 2][j - 2] == 1 && plateau[i - 3][j - 3] == 1) {
-                            InitalizePlacement(j - 2);
+                        }
+                        if (plateau[i - 1][j - 1] == 0 && plateau[i - 2][j - 2] == 1 && plateau[i - 3][j - 3] == 1 && (plateau[i][j - 1] != 0)) {
+
+                            InitalizePlacement(j);
                             return 1;
                         }
 
                     }
+                    if (plateau[i][j] == 0 && plateau[i - 1][j - 1] == 1 && plateau[i - 2][j - 2] == 1 && plateau[i - 3][j - 3] == 1 && (i == 5 || plateau[i + 1][j] != 0)) {
 
-                    if (plateau[i][j] == 0 && plateau[i - 1][j - 1] == 1 && plateau[i - 2][j - 2] == 1 && plateau[i - 3][j - 3] == 1) {
-                        console.log(j);
-                        InitalizePlacement(j - 1);
+                        InitalizePlacement(j + 1);
                         return 1;
                     }
                 }
