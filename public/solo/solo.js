@@ -317,6 +317,10 @@
             if (IACheckDiagolaneNegative()) {
                 return 1;
             }
+            // if (!savoirSicollonePleine(4)) {
+            //     InitalizePlacement(4);
+            //     return 1;
+            // }
             let randomNumber = Math.floor(Math.random() * (8 - 1)) + 1;
             while (savoirSicollonePleine(randomNumber)) {
                 randomNumber = Math.floor(Math.random() * (8 - 1)) + 1;
@@ -334,6 +338,8 @@
         if (plateau[0][collone] != 0) {
             return true;
         }
+
+        return false;
     }
 
     function InitalizePlacement(where) {
